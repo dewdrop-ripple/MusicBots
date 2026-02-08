@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D mRigidBody;
     [SerializeField] private BoxCollider2D mCharacterCollider;
     [SerializeField] private CircleCollider2D mGroundCollider;
+    [SerializeField] private GameObject mCharacter;
+    [SerializeField] private GameObject mEyes;
 
     private float mVelocity; // Meters/Second
     private float mJumpHeight; // Meters
@@ -15,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float mStaminaDrain;
     private float mStaminaRegen;
-    private float mHealthRegen;
+    private float mHealthDrain;
 
     private float mMaxHealth;
     private float mMaxStamina;
@@ -68,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
         mStaminaDrain = 10.0f;
         mStaminaRegen = 5.0f;
-        mHealthRegen = 5.0f;
+        mHealthDrain = 0.5f;
     }
 
     // Update keybinds
@@ -98,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKey(mDash) && mStamina > mStaminaDrain / 5.0f)
             {
                 mIsDashing = true;
-                mStamina -= (mStaminaDrain + mStaminaRegen) * Time.deltaTime;
+                if (mDirection != 0) mStamina -= (mStaminaDrain + mStaminaRegen) * Time.deltaTime;
             }
             else
             {
@@ -112,12 +114,62 @@ public class PlayerMovement : MonoBehaviour
             else mIsInteracting = false;
         }
 
+        // Character Movement
+        {
+            switch(mDirection)
+            {
+                case (-1):
+                    mEyes.transform.localPosition = new Vector3(-0.15f, 0.0f, 0.0f);
+
+                    if (mIsDashing)
+                    {
+                        mCharacter.transform.localPosition = new Vector3(0.35f, 0.0f, 0.0f);
+                        mCharacter.transform.localRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, -15.0f));
+                    }
+                    else
+                    {
+                        mCharacter.transform.localPosition = new Vector3(0.17f, 0.0f, 0.0f);
+                        mCharacter.transform.localRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, -7.0f));
+                    }
+
+                    break;
+
+                case (1):
+                    mEyes.transform.localPosition = new Vector3(0.15f, 0.0f, 0.0f);
+
+                    if (mIsDashing)
+                    {
+                        mCharacter.transform.localPosition = new Vector3(-0.35f, 0.0f, 0.0f);
+                        mCharacter.transform.localRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, 15.0f));
+                    }
+                    else
+                    {
+                        mCharacter.transform.localPosition = new Vector3(-0.17f, 0.0f, 0.0f);
+                        mCharacter.transform.localRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, 7.0f));
+                    }
+
+                    break;
+
+                default:
+                    mEyes.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+                    mCharacter.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+                    mCharacter.transform.localRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f));
+                    break;
+            }
+        }
+
         // Heal/Stamina Regen
         {
+            mHealth -= mHealthDrain * Time.deltaTime;
+
             if (mStamina < mMaxStamina) mStamina += mStaminaRegen * Time.deltaTime;
             if (mStamina < 0.0f) mStamina = 0.0f;
-            if (mHealth < mMaxHealth) mHealth += mHealthRegen * Time.deltaTime;
-            if (mHealth <  0.0f) mHealth = 0.0f;
+            if (mHealth > mMaxHealth) mHealth = mMaxHealth; 
+            if (mHealth < 0.0f)
+            {
+                mHealth = 0.0f;
+                GameOver();
+            }
         }
     }
 
@@ -155,4 +207,14 @@ public class PlayerMovement : MonoBehaviour
     public float GetStamina() { return mStamina; }
     public float GetMaxStamina() { return mMaxStamina; }
     public float GetStaminaPercent() { return mStamina / mMaxStamina; }
+
+    private void GameOver()
+    {
+        Debug.Log("Health Hit 0");
+    }
+
+    public void Heal(float healthIncreasePerSecond)
+    {
+        mHealth += (healthIncreasePerSecond + mHealthDrain) * Time.deltaTime;
+    }
 }

@@ -151,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 3020781942682959204}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.022, y: 0.265, z: 0}
+  m_LocalPosition: {x: 0.15, y: 0.265, z: 0}
   m_LocalScale: {x: 0.15, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -242,7 +242,7 @@ Transform:
   m_GameObject: {fileID: 3464513707742592992}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.23, y: 0.26, z: 0}
+  m_LocalPosition: {x: -0.15, y: 0.26, z: 0}
   m_LocalScale: {x: 0.15, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 8557706126150543387}
   m_Layer: 0
   m_Name: PRF_PlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -461,7 +461,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1454800913171987668}
@@ -590,3 +590,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SCR
   mCharacterCollider: {fileID: 851509214971797451}
   mGroundCollider: {fileID: 2215254147195806043}
+  mCharacter: {fileID: 1110255447576546963}
+  mEyes: {fileID: 7480921018434694013}
