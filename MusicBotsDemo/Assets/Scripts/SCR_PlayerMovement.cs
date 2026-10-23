@@ -61,16 +61,16 @@ public class PlayerMovement : MonoBehaviour
     // WILL BE CHANGED WHEN I ACTUALLY IMPLEMENT PARTS SYSTEM
     private void RecalculatePlayerStats()
     {
-        mVelocity = 4.0f;
-        mJumpHeight = 3.0f;
-        mDashSpeed = 8.0f;
+        mVelocity = 3.0f;
+        mJumpHeight = 1.0f;
+        mDashSpeed = 6.0f;
 
         mMaxHealth = 50.0f;
         mMaxStamina = 50.0f;
 
         mStaminaDrain = 10.0f;
         mStaminaRegen = 5.0f;
-        mHealthDrain = 0.5f;
+        mHealthDrain = 1.0f;
     }
 
     // Update keybinds
